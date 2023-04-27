@@ -9,8 +9,9 @@ def main():
         i = inputs[0]
         j = inputs[1]
         value = inputs[2]
-        sudoku.board[i][j] = value
-    # sudoku.show()
+        sudoku.set_entry(i, j, value)
+    sudoku.solve(0, 0)
+    sudoku.print_board()
 
 if __name__ == '__main__':
     main()
