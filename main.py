@@ -12,6 +12,8 @@ def main():
         sudoku.set_entry(i, j, value)
     sudoku.solve(0, 0)
     sudoku.print_board()
+    #else:
+    #    print('Error')
 
 if __name__ == '__main__':
     main()

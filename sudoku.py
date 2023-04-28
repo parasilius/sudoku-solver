@@ -55,12 +55,15 @@ class Sudoku:
             return True
         while not self.is_empty(i, j):
             i, j = self.move_to_next_cell(i, j)
+            if i >= self.size or j >= self.size:
+                return True
         for value in self.possible_numbers[i][j]:
             self.set_entry(i, j, value)
             if self.is_valid(i, j):
                 p, q = self.move_to_next_cell(i, j)
                 if self.solve(p, q):
                     return True
+        self.set_entry(i, j, 0)
         return False
 
     def print_board(self) -> None:
