@@ -10,10 +10,10 @@ def main():
         j = inputs[1]
         value = inputs[2]
         sudoku.set_entry(i, j, value)
-    sudoku.solve(0, 0)
-    sudoku.print_board()
-    #else:
-    #    print('Error')
+    if sudoku.solve(0, 0):
+        sudoku.print_board()
+    else:
+        print('Unsolvable CSP!')
 
 if __name__ == '__main__':
     main()
