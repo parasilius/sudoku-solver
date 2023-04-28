@@ -1,14 +1,29 @@
-from math import sqrt
+from math import sqrt, ceil
 
 class Sudoku:
     def __init__(self, n: int):
         self.size = n
         self.board = [[0 for i in range(n)] for j in range(n)]
         self.possible_numbers = [[set(i + 1 for i in range(self.size)) for i in range(self.size)] for j in range(self.size)]
+        self.possible_values_in_row = [set() for i in range(n)]
+        self.possible_values_in_column = [set() for i in range(n)]
+        self.possible_values_in_box = [set() for i in range(n)]
     
     def set_entry(self, i: int, j: int, value: int) -> None:
+        self.possible_values_in_row[i].discard(self.board[i][j])
+        self.possible_values_in_column[j].discard(self.board[i][j])
+        self.possible_values_in_box[int((i // sqrt(self.size)) * sqrt(self.size) + j // sqrt(self.size))].discard(self.board[i][j])
         self.board[i][j] = value
+        if value != 0:
+            self.possible_values_in_row[i].add(value)
+            self.possible_values_in_column[j].add(value)
+            self.possible_values_in_box[int((i // sqrt(self.size)) * sqrt(self.size) + j // sqrt(self.size))].add(value)
     
+    def possible_values(self, i: int, j: int):
+        for value in range(1, self.size + 1):
+            if value not in self.possible_values_in_row[i] and value not in self.possible_values_in_column[j] and value not in self.possible_values_in_box[int((i // sqrt(self.size)) * sqrt(self.size) + j // sqrt(self.size))]:
+                yield value
+
     def move_to_next_cell(self, i: int, j: int) -> tuple:
         j += 1
         if j >= self.size:
@@ -57,7 +72,7 @@ class Sudoku:
             i, j = self.move_to_next_cell(i, j)
             if i >= self.size or j >= self.size:
                 return True
-        for value in self.possible_numbers[i][j]:
+        for value in self.possible_values(i, j):
             self.set_entry(i, j, value)
             if self.is_valid(i, j):
                 p, q = self.move_to_next_cell(i, j)
