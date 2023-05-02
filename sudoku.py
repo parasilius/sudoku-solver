@@ -74,10 +74,9 @@ class Sudoku:
                 return True
         for value in self.possible_values(i, j):
             self.set_entry(i, j, value)
-            if self.is_valid(i, j):
-                p, q = self.move_to_next_cell(i, j)
-                if self.solve(p, q):
-                    return True
+            p, q = self.move_to_next_cell(i, j)
+            if self.solve(p, q):
+                return True
         self.set_entry(i, j, 0)
         return False
 
