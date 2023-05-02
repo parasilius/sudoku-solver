@@ -19,7 +19,7 @@ def get_sudoku_from_file():
     n = int(lines[0])
     sudoku = Sudoku(n)
     c = int(lines[1])
-    for line_num in range(2, c):
+    for line_num in range(2, c + 2):
         line = lines[line_num]
         inputs = list(map(int, line.split()))
         i = inputs[0]
