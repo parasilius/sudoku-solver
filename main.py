@@ -30,8 +30,11 @@ def get_sudoku_from_file():
 
 def main():
     sudoku = get_sudoku_from_file()
+    print('Before solve:')
+    sudoku.print_board()
     start_time = time.time()
     if sudoku.solve(0, 0):
+        print('After solve:')
         sudoku.print_board()
     else:
         print('Unsolvable CSP!')
