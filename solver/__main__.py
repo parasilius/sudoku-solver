@@ -1,5 +1,6 @@
-from sudoku import Sudoku
+from solver import Sudoku
 import time
+from os import path
 
 def get_sudoku_from_commandline():
     n = int(input())
@@ -14,7 +15,10 @@ def get_sudoku_from_commandline():
     return sudoku
 
 def get_sudoku_from_file():
-    with open('sudoku.txt') as f:
+    default_file_name = 'sudoku.txt'
+    file_name = default_file_name if (inp := input(f'Enter file name: (default: {default_file_name}) ')) == '' else inp
+    BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
+    with open(path.join(BASE_DIR, file_name)) as f:
         lines = f.readlines()
     n = int(lines[0])
     sudoku = Sudoku(n)
@@ -29,7 +33,8 @@ def get_sudoku_from_file():
     return sudoku
 
 def main():
-    sudoku = get_sudoku_from_file()
+    inp = input('Read from file? [Y/n] ')
+    sudoku = get_sudoku_from_commandline() if inp == 'n' else get_sudoku_from_file()
     print('Before solve:')
     sudoku.print_board()
     start_time = time.time()
